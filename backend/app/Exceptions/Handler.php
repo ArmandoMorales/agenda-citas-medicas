@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -46,5 +47,21 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    /**
+     * RQNF-03: la API debe responder 400 ante datos inválidos (en vez del
+     * 422 por defecto de Laravel) manteniendo el detalle de errores por campo.
+     */
+    public function render($request, Throwable $e)
+    {
+        if ($e instanceof ValidationException && $request->expectsJson()) {
+            return response()->json([
+                'message' => 'Los datos enviados no son válidos.',
+                'errors' => $e->errors(),
+            ], 400);
+        }
+
+        return parent::render($request, $e);
     }
 }
