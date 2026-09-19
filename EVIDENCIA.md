@@ -90,6 +90,8 @@ Todos los códigos HTTP cumplen RQNF-03: 200/201 éxito, 400 datos inválidos, 4
 
 ## 5. Interfaz — capturas de pantalla
 
+> Capturas actualizadas tras el rediseño visual (PR #6): paleta indigo/slate, tipografía Inter, botones con gradiente y badges en píldora.
+
 **Calendario mensual con eventos coloreados por estado** (RQF-02, RQF-10):
 
 ![Calendario mensual](docs/evidencia/01-calendario-mes.png)
@@ -101,6 +103,10 @@ Todos los códigos HTTP cumplen RQNF-03: 200/201 éxito, 400 datos inválidos, 4
 **Intento de crear una cita con horario en conflicto**, rechazado por el servidor y mostrado en el formulario (RQF-03, RQNF-07):
 
 ![Conflicto de horario](docs/evidencia/03-conflicto-horario.png)
+
+**Formulario de nueva cita**, con selects de paciente/doctor alimentados desde `GET /api/pacientes` y `GET /api/doctores` (RQF-01, RQF-07):
+
+![Nueva cita](docs/evidencia/04-nueva-cita.png)
 
 ## 6. Pruebas funcionales realizadas
 
