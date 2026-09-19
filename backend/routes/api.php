@@ -23,3 +23,4 @@ Route::patch('/citas/{id}/estado', [CitaController::class, 'actualizarEstado']);
 
 Route::get('/doctores', [DoctorController::class, 'index']);
 Route::get('/pacientes', [PacienteController::class, 'index']);
+Route::post('/pacientes', [PacienteController::class, 'store']);
