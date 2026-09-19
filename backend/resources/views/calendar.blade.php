@@ -4,18 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda de Citas Médicas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 </head>
 <body>
     <header class="app-header">
-        <h1>Agenda de Citas Médicas</h1>
+        <div class="app-brand">
+            <span class="app-brand-icon">🩺</span>
+            <h1>Agenda de Citas Médicas</h1>
+        </div>
         <div class="app-filters">
             <label for="filtro-doctor">Doctor</label>
             <select id="filtro-doctor">
                 <option value="">Todos</option>
             </select>
-            <button id="btn-nueva-cita" type="button" class="btn btn-primary">+ Nueva cita</button>
+            <button id="btn-nueva-cita" type="button" class="btn btn-primary">
+                <span aria-hidden="true">+</span> Nueva cita
+            </button>
         </div>
     </header>
 
@@ -65,9 +73,9 @@
             </dl>
             <p class="form-error" id="detalle-error"></p>
             <div class="modal-actions detalle-acciones">
-                <button type="button" class="btn btn-confirmar" data-accion="confirmada">Confirmar</button>
-                <button type="button" class="btn btn-atender" data-accion="atendida">Marcar atendida</button>
-                <button type="button" class="btn btn-cancelar" data-accion="cancelada">Cancelar cita</button>
+                <button type="button" class="btn btn-confirmar" data-accion="confirmada">✓ Confirmar</button>
+                <button type="button" class="btn btn-atender" data-accion="atendida">★ Marcar atendida</button>
+                <button type="button" class="btn btn-cancelar" data-accion="cancelada">✕ Cancelar cita</button>
             </div>
             <div class="modal-actions">
                 <button type="button" class="btn" data-cerrar-modal="modal-detalle">Cerrar</button>
