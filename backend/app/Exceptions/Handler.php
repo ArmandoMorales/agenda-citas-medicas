@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\ConflictoHorarioException;
+use App\Exceptions\TransicionEstadoInvalidaException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -60,6 +62,11 @@ class Handler extends ExceptionHandler
                 'message' => 'Los datos enviados no son válidos.',
                 'errors' => $e->errors(),
             ], 400);
+        }
+
+        // RQF-03 / RQNF-07: conflicto de horario o transición de estado inválida.
+        if (($e instanceof ConflictoHorarioException || $e instanceof TransicionEstadoInvalidaException) && $request->expectsJson()) {
+            return response()->json(['message' => $e->getMessage()], 409);
         }
 
         return parent::render($request, $e);
