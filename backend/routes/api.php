@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\CitaController;
+use App\Http\Controllers\Api\DoctorController;
+use App\Http\Controllers\Api\PacienteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -8,12 +10,16 @@ use Illuminate\Support\Facades\Route;
 | API Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| Rutas de la API de Agenda de Citas Médicas: gestión de citas y
+| lectura de doctores/pacientes para el calendario.
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/citas', [CitaController::class, 'index']);
+Route::post('/citas', [CitaController::class, 'store']);
+Route::get('/citas/{id}', [CitaController::class, 'show']);
+Route::put('/citas/{id}', [CitaController::class, 'update']);
+Route::patch('/citas/{id}/estado', [CitaController::class, 'actualizarEstado']);
+
+Route::get('/doctores', [DoctorController::class, 'index']);
+Route::get('/pacientes', [PacienteController::class, 'index']);
