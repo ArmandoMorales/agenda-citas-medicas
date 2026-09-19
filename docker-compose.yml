@@ -1,0 +1,36 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: agenda_citas_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: agenda_citas
+      MYSQL_USER: agenda_user
+      MYSQL_PASSWORD: agenda_pass
+      MYSQL_ROOT_PASSWORD: root_pass
+    ports:
+      - "3307:3306"
+    volumes:
+      - agenda_citas_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot_pass"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  phpmyadmin:
+    image: phpmyadmin:5
+    container_name: agenda_citas_phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: agenda_user
+      PMA_PASSWORD: agenda_pass
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+
+volumes:
+  agenda_citas_mysql_data:
+    driver: local
