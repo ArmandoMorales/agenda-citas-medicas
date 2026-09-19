@@ -228,6 +228,18 @@ input:focus {
     color: var(--color-text-muted);
 }
 
+.nuevo-paciente {
+    background: var(--color-bg);
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px 2px;
+    margin: -4px 0 14px;
+}
+
+.nuevo-paciente.hidden {
+    display: none;
+}
+
 .modal-actions {
     display: flex;
     justify-content: flex-end;

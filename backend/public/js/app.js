@@ -77,6 +77,33 @@
         pacientes.forEach((paciente) => {
             selectPaciente.add(new Option(paciente.nombre, paciente.id));
         });
+
+        selectPaciente.add(new Option('+ Nuevo paciente…', '__nuevo__'));
+    }
+
+    const camposNuevoPaciente = document.getElementById('nuevo-paciente-campos');
+
+    document.getElementById('crear-paciente').addEventListener('change', (evento) => {
+        camposNuevoPaciente.classList.toggle('hidden', evento.target.value !== '__nuevo__');
+    });
+
+    async function crearPacienteDesdeModal() {
+        const paciente = await apiFetch('/pacientes', {
+            method: 'POST',
+            body: JSON.stringify({
+                nombre: document.getElementById('nuevo-paciente-nombre').value,
+                documento: document.getElementById('nuevo-paciente-documento').value,
+                email: document.getElementById('nuevo-paciente-email').value || null,
+                telefono: document.getElementById('nuevo-paciente-telefono').value || null,
+            }),
+        });
+
+        const select = document.getElementById('crear-paciente');
+        select.add(new Option(paciente.nombre, paciente.id), select.options.length - 1);
+        select.value = paciente.id;
+        camposNuevoPaciente.classList.add('hidden');
+
+        return paciente.id;
     }
 
     function citaAEvento(cita) {
@@ -140,6 +167,7 @@
     function abrirModalCrear(fechaInicial) {
         formCrear.reset();
         crearError.textContent = '';
+        camposNuevoPaciente.classList.add('hidden');
 
         const inicio = fechaInicial || new Date();
         inicio.setHours(9, 0, 0, 0);
@@ -160,6 +188,10 @@
         const datos = Object.fromEntries(new FormData(formCrear).entries());
 
         try {
+            if (datos.paciente_id === '__nuevo__') {
+                datos.paciente_id = await crearPacienteDesdeModal();
+            }
+
             await apiFetch('/citas', { method: 'POST', body: JSON.stringify(datos) });
             cerrarModal(modalCrear);
             calendar.refetchEvents();
