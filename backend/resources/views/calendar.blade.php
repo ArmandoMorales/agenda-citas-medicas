@@ -39,6 +39,20 @@
                 <label>Paciente
                     <select name="paciente_id" id="crear-paciente" required></select>
                 </label>
+                <div id="nuevo-paciente-campos" class="nuevo-paciente hidden">
+                    <label>Nombre completo
+                        <input type="text" id="nuevo-paciente-nombre" maxlength="255">
+                    </label>
+                    <label>Documento
+                        <input type="text" id="nuevo-paciente-documento" maxlength="50">
+                    </label>
+                    <label>Email (opcional)
+                        <input type="email" id="nuevo-paciente-email" maxlength="255">
+                    </label>
+                    <label>Teléfono (opcional)
+                        <input type="text" id="nuevo-paciente-telefono" maxlength="30">
+                    </label>
+                </div>
                 <label>Doctor
                     <select name="doctor_id" id="crear-doctor" required></select>
                 </label>

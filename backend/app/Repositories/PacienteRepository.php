@@ -16,4 +16,9 @@ class PacienteRepository
     {
         return Paciente::find($id);
     }
+
+    public function create(array $datos): Paciente
+    {
+        return Paciente::create($datos);
+    }
 }
