@@ -46,4 +46,22 @@ class CitaRepository
 
         return $cita->refresh()->load(['paciente', 'doctor']);
     }
+
+    /**
+     * RQF-03 / RQNF-07: existe una cita activa (no cancelada) del mismo
+     * doctor cuyo rango de horario se solapa con [$inicio, $fin).
+     */
+    public function existsOverlapping(int $doctorId, string $inicio, string $fin, ?int $excludeId = null): bool
+    {
+        $query = Cita::where('doctor_id', $doctorId)
+            ->where('estado', '!=', Cita::ESTADO_CANCELADA)
+            ->where('fecha_inicio', '<', $fin)
+            ->where('fecha_fin', '>', $inicio);
+
+        if ($excludeId !== null) {
+            $query->where('id', '!=', $excludeId);
+        }
+
+        return $query->exists();
+    }
 }
